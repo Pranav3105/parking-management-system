@@ -42,3 +42,6 @@ Curl : ``` curl --location --request GET 'http://localhost:8080/parking/01db76ae
 
 ### Test Coverage
 The project has test coverage of 100% for controllers, 98.2% for all the services.
+
+### Technologies used
+Java 17, Spring Boot 3.0.1 and SQL - H2 for easy support to start the application locally (This can be easily migrated to NoSQL for enhanced scalability), Docker - to provide cloud native support and easy deployment on any managed k8s cluster, slf4j profile based logging for enhanced tracebility and debugging.

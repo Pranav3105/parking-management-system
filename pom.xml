@@ -15,7 +15,7 @@
 	<name>parking-management-system</name>
 	<description>Demo Project for BT</description>
 	<properties>
-		<java.version>8</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

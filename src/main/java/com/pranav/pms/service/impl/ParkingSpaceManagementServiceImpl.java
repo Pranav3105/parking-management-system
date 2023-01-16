@@ -24,15 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ParkingSpaceManagementServiceImpl implements ParkingSpaceManagementService {
-	
+
 	@Autowired
 	ParkingSpaceRepository parkingSpaceRepository;
-	
+
 	@Autowired
 	BayRepository bayRepository;
-	
-	@Autowired
-	ObjectMapper objectMapper;
+
+	ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	public ParkingSpaceDto addParkingLot(ParkingSpaceDto parkingSpaceDto) {
@@ -41,40 +40,46 @@ public class ParkingSpaceManagementServiceImpl implements ParkingSpaceManagement
 		createParkingBays(parkingSpaceEntity);
 		ParkingSpaceEntity savedParkingSpaceEntity = parkingSpaceRepository.save(parkingSpaceEntity);
 		log.debug("Created parking space : {} with total slots : {}", savedParkingSpaceEntity.getId(),
-				savedParkingSpaceEntity.getSmall() + savedParkingSpaceEntity.getMedium() +
-				savedParkingSpaceEntity.getLarge() + savedParkingSpaceEntity.getExtraLarge());
+				savedParkingSpaceEntity.getSmall() + savedParkingSpaceEntity.getMedium()
+						+ savedParkingSpaceEntity.getLarge() + savedParkingSpaceEntity.getExtraLarge());
 		return objectMapper.convertValue(savedParkingSpaceEntity, ParkingSpaceDto.class);
 	}
-	
+
 	private void createParkingBays(ParkingSpaceEntity parkingSpaceEntity) {
 		List<BayEntity> bays = new ArrayList<>();
-		int small = parkingSpaceEntity.getSmall();
-		for (int i = 0; i < small; i++) {
-			BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
-					.parkingSize(ParkingSize.SMALL).parkingSpaceEntity(parkingSpaceEntity).build();
-			bays.add(bayEntity);
+		if (parkingSpaceEntity.getSmall() != null) {
+			int small = parkingSpaceEntity.getSmall();
+			for (int i = 0; i < small; i++) {
+				BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
+						.parkingSize(ParkingSize.SMALL).parkingSpaceEntity(parkingSpaceEntity).build();
+				bays.add(bayEntity);
+			}
 		}
-		int medium = parkingSpaceEntity.getMedium();
-		for (int i = 0; i < medium; i++) {
-			BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
-					.parkingSize(ParkingSize.MEDIUM).parkingSpaceEntity(parkingSpaceEntity).build();
-			bays.add(bayEntity);
+		if (parkingSpaceEntity.getMedium() != null) {
+			int medium = parkingSpaceEntity.getMedium();
+			for (int i = 0; i < medium; i++) {
+				BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
+						.parkingSize(ParkingSize.MEDIUM).parkingSpaceEntity(parkingSpaceEntity).build();
+				bays.add(bayEntity);
+			}
 		}
-		
-		int large = parkingSpaceEntity.getLarge();
-		for (int i = 0; i < large; i++) {
-			BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
-					.parkingSize(ParkingSize.LARGE).parkingSpaceEntity(parkingSpaceEntity).build();
-			bays.add(bayEntity);
+		if (parkingSpaceEntity.getLarge() != null) {
+			int large = parkingSpaceEntity.getLarge();
+			for (int i = 0; i < large; i++) {
+				BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
+						.parkingSize(ParkingSize.LARGE).parkingSpaceEntity(parkingSpaceEntity).build();
+				bays.add(bayEntity);
+			}
 		}
-		
-		int extraLarge = parkingSpaceEntity.getLarge();
-		for (int i = 0; i < extraLarge; i++) {
-			BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
-					.parkingSize(ParkingSize.EXTRALARGE).parkingSpaceEntity(parkingSpaceEntity).build();
-			bays.add(bayEntity);
+		if (parkingSpaceEntity.getExtraLarge() != null) {
+			int extraLarge = parkingSpaceEntity.getLarge();
+			for (int i = 0; i < extraLarge; i++) {
+				BayEntity bayEntity = BayEntity.builder().vacant(Boolean.TRUE).id(UUID.randomUUID().toString())
+						.parkingSize(ParkingSize.EXTRALARGE).parkingSpaceEntity(parkingSpaceEntity).build();
+				bays.add(bayEntity);
+			}
+			parkingSpaceEntity.setBays(bays);
 		}
-		parkingSpaceEntity.setBays(bays);
 	}
 
 	@Override
@@ -85,7 +90,7 @@ public class ParkingSpaceManagementServiceImpl implements ParkingSpaceManagement
 	@Override
 	public ParkingSpaceDto getParkingSpaceDetails(String parkingSpaceId) {
 		Optional<ParkingSpaceEntity> parkingSpaceEntityOp = parkingSpaceRepository.findById(parkingSpaceId);
-		if(parkingSpaceEntityOp.isEmpty()) {
+		if (parkingSpaceEntityOp.isEmpty()) {
 			throw new ParkingManagementSystemException("PMS_004", ExceptionConstants.PMS_004);
 		}
 		return objectMapper.convertValue(parkingSpaceEntityOp.get(), ParkingSpaceDto.class);

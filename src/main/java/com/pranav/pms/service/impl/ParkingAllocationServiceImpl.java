@@ -33,8 +33,7 @@ public class ParkingAllocationServiceImpl implements ParkingAllocationService {
 	@Autowired
 	ParkingSpaceRepository parkingSpaceRepository;
 	
-	@Autowired
-	ObjectMapper objectMapper;
+	ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	public BayDto allocateParkingSpace(String parkingLotId, ParkingSize size, String carNumber) {

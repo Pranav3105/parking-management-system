@@ -39,3 +39,6 @@ Curl : ```curl --location --request POST 'http://localhost:8080/releaseslot/0845
 
 - Get Current Parking Status
 Curl : ``` curl --location --request GET 'http://localhost:8080/parking/01db76ae-e9d5-40f7-ac1d-c733f7fb18df'```
+
+### Test Coverage
+The project has test coverage for 100% for controllers, 98% for all the services.

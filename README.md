@@ -12,6 +12,12 @@
 
 ### Docker
 
+1. Open Terminal at project base location
+2. Run ```mvn clean install``` to verify the installation and taste cases
+3. Run ```docker build --tag=parking-management-system-latest .```
+4. Run ```docker run -p8080:8080 parking-management-system-latest```
+5. Test the application by hitting ```http://localhost:8080/parking/123```
+
 ## Features
 - Create Parking Space
 Curl : ``` curl --location --request POST 'http://localhost:8080/parking' \

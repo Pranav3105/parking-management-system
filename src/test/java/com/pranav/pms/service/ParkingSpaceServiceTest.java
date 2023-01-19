@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -19,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pranav.pms.dto.BayDto;
 import com.pranav.pms.dto.ParkingSpaceDto;
 import com.pranav.pms.entity.ParkingSpaceEntity;
 import com.pranav.pms.exception.ParkingManagementSystemException;

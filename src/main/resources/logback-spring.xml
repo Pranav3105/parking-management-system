@@ -9,6 +9,7 @@
 
 		<logger name="org.springframework" level="INFO" />
 		<logger name="com.pranav" level="DEBUG" />
+		<logger name="org.springframework.cache" level="trace"/>
 
 		<root level="error">
 			<appender-ref ref="CONSOLE" />

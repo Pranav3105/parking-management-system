@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -83,7 +84,9 @@ public class ParkingSpaceManagementServiceImpl implements ParkingSpaceManagement
 	}
 
 	@Override
+	@Cacheable(cacheNames = "parkingBays", key = "#id + #size.toString()", sync = true)
 	public List<BayEntity> getFreeParkingSpaceBySizeAndId(ParkingSize size, String id) {
+		log.debug("Getting from DB : {}, {}", size, id);
 		return bayRepository.findByParkingSpaceEntityIdAndParkingSizeAndVacant(id, size, Boolean.TRUE);
 	}
 

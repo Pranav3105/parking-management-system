@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "parkingSpaceEntity")
 @EqualsAndHashCode
 @Entity
 @Builder

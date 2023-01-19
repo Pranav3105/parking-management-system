@@ -1,7 +1,6 @@
 package com.pranav.pms.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,15 +13,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pranav.pms.ParkingManagementSystemApplication;
 import com.pranav.pms.dto.BayDto;
 import com.pranav.pms.exception.ParkingManagementSystemException;
 import com.pranav.pms.service.impl.ParkingAllocationServiceImpl;
-import com.pranav.pms.service.impl.ParkingSpaceManagementServiceImpl;
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK, classes = ParkingManagementSystemApplication.class)
@@ -33,8 +29,6 @@ public class AllocationControllerTest {
 	
 	@MockBean
 	ParkingAllocationServiceImpl parkingAllocationServiceImpl;
-	
-	private final ObjectMapper objectMapper = new ObjectMapper();
 	
 	@Test
 	void allocationTest() throws Exception {

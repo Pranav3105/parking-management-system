@@ -17,6 +17,7 @@ import com.pranav.pms.repository.BayRepository;
 import com.pranav.pms.repository.ParkingSpaceRepository;
 import com.pranav.pms.service.ParkingAllocationService;
 import com.pranav.pms.service.ParkingSpaceManagementService;
+import com.pranav.pms.util.CacheUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,9 @@ public class ParkingAllocationServiceImpl implements ParkingAllocationService {
 	
 	@Autowired
 	ParkingSpaceRepository parkingSpaceRepository;
+	
+	@Autowired
+	CacheUtil cacheUtil;
 	
 	ObjectMapper objectMapper = new ObjectMapper();
 
@@ -49,6 +53,7 @@ public class ParkingAllocationServiceImpl implements ParkingAllocationService {
 			bayEntity.setVacant(Boolean.FALSE);
 			bayEntity.setCarRegistrationNumber(carNumber);
 			bayRepository.save(bayEntity);
+			cacheUtil.updateFreeBayEntity(parkingLotId, bayEntity.getParkingSize(), "allocate", bayEntity);
 			log.debug("Allocated space for {} in the bay {}",carNumber, bayEntity.getId());
 			return objectMapper.convertValue(bayEntity, BayDto.class);
 		}
@@ -84,6 +89,8 @@ public class ParkingAllocationServiceImpl implements ParkingAllocationService {
 		bayEntityData.setVacant(Boolean.TRUE);
 		
 		BayEntity savedBayEntity = bayRepository.save(bayEntityData);
+		
+		cacheUtil.updateFreeBayEntity(parkingLotId, bayEntityData.getParkingSize(), "release", bayEntityData);
 		
 		return objectMapper.convertValue(savedBayEntity, BayDto.class);
 	}
